@@ -1,0 +1,70 @@
+## this is the skeleton of all pages on in this app - it defines the basic html tags
+<!DOCTYPE html>
+<html>
+    <meta charset="UTF-8">
+    <head>
+
+        <title>FOMO - Family Oriented Music Organization</title>
+        <link rel="icon"
+           type="image/png"
+           href="${ STATIC_URL }homepage/media/images/music_icon.png">
+
+        ## add any site-wide scripts or CSS here; for example, jquery:
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script src="${ STATIC_URL }homepage/media/bootstrap3/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" href="${ STATIC_URL }homepage/media/bootstrap3/css/bootstrap.css" />
+        <link href="${ STATIC_URL }homepage/media/bootstrap3/css/bootstrap-theme.css"  />
+
+        ## render the static file links with the same name as this template
+        <script src="/django_mako_plus/dmp-common.min.js"></script>
+        ${ django_mako_plus.links(self) }
+
+    </head>
+    <body>
+        <div>
+          <%block name="maintenance">
+            <div class="maintenance">
+              This site is currently under maintenance.  Please check back with us soon!
+            </div>
+          </%block>
+        </div>
+        <header>
+          <%block name="nav_bar">
+            ## Area for nav bar, set in app_case.htm
+          </%block>
+        </header>
+
+        <main>
+          <div class="container-fluid">
+            <div class="row">
+              <%block name="top_content">
+              </%block>
+            </div>
+            <div class="row">
+              <div class="col-md-2 padding-0">
+                <%block name="left_content">
+                </%block>
+              </div>
+              <div class="col-md-8 padding-0">
+                <%block name="content">
+                </%block>
+              </div>
+              <div class="col-md-2 padding-0">
+                <%block name="right_content">
+                </%block>
+              </div>
+            </div>
+            <div class="row">
+                <%block name="bottom_content">
+                </%block>
+            </div>
+          </div>
+        </main>
+
+        <footer class="footer navbar navbar-default navbar-fixed-bottom">
+          <% from datetime import datetime %>
+          &copy; ${ datetime.now().year }, Jake Fairbairn
+        </footer>
+
+    </body>
+</html>

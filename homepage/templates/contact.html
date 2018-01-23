@@ -1,0 +1,79 @@
+<%inherit file="app_base.htm" />
+
+<%block name="content">
+  <div class="container">
+    <div class="row">
+        <div class="col-lg-1">
+        </div>
+
+        <div class="panel panel-default col-lg-4 col-md-6 col-sm-5">
+            <div class="panel-heading">
+                <h2>Feeling formal?</</h2>
+                <h4>Fill this out and we'll get back to you quickly.</h4>
+            </div>
+            <form action="/contact/" method="post">
+              ${ csrf_input }
+              <div class="panel-body">
+                  ##input for submitter's name
+                  <div class="form-group">
+                      <div class="input-group">
+                          <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                          <input type="textbox" name="name" placeholder = "Name" class="form-control" />
+                      </div>
+                  </div>
+                  ##input for submitter's email
+                  <div class="form-group">
+                      <div class="input-group">
+                          <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
+                          <input type="textbox" name="email" placeholder = "Email" class="form-control" />
+                      </div>
+                  </div>
+                  ##input for comment
+                  <div class="form-group">
+                      <div class="input-group">
+                          <span class="input-group-addon"><i class="glyphicon glyphicon-comment"></i></span>
+                          <textarea rows="4" name="comment" placeholder = "Comment" class="form-control vresize"></textarea>
+                      </div>
+                  </div>
+                  ##submit and clear data buttons
+                  <div>
+                      <button type="submit" class="btn btn-primary pull-right">
+                          Send <span class="glyphicon glyphicon-send"></span>
+                      </button>
+                      <button type="reset" name="reset" value="Reset" class="btn btn-secondary pull-left">
+                          Clear <span class="glyphicon glyphicon-trash"></span>
+                      </button>
+                  </div>
+              </div>
+            </form>
+        </div>
+
+        <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
+        </div>
+        <div class="panel panel-default col-lg-4 col-md-6 col-sm-5">
+            <div class="panel-heading">
+                <h2>Prefer something else?</</h2>
+                <h4>Don't worry, we've got you covered.</h4>
+            </div>
+            <div class="panel-body">
+                <div>
+                    <fieldset>
+                        <legend>Phone</legend>
+                        1-800-641-1466 (1-800-MISSION)
+                    </fieldset>
+                </div>
+                <br />
+                <div>
+                    <fieldset>
+                        <legend>Email</legend>
+                        missionary_portal@gmail.com
+                    </fieldset>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-1">
+        </div>
+    </div>
+  </div>
+</%block>
