@@ -1,9 +1,19 @@
 <%inherit file="app_base.htm" />
 
+<%block name="top_content">
+  <div class="container-fluid no-padding">
+    <div class="row">
+      <div class="col-md-12">
+        <img src="${ STATIC_URL }homepage/media/images/fomo_home.jpg" class="img-responsive big_img" />
+      </div>
+    </div>
+  </div>
+</%block>
+
 <%block name="content">
     <div class="content">
-        <h3>Congratulations -- you've successfully created a new django-mako-plus app!</h3>
-        <h4>Next Up: Go through the django-mako-plus tutorial and add Javascript, CSS, and urlparams to this page.</h4>
-        <h4 class="utc-time">Current time in UTC: ${ utc_time }</h4>
+        <h3>Welcome to FOMO!</h3>
+        <h4>FOMO is your #1 music store for new and used instruments, instrument rental and accessories, sheet music, venues, and more!</h4>
+        <h4 >Check out the other pages on our site to learn more, and feel free to contact us with any questions!</h4>
     </div>
 </%block>

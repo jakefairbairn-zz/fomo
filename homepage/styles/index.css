@@ -1,3 +1,15 @@
-/* h4.utc-time {
-    color: #AA3333;
-} */
+/* Remove all padding */
+.no-padding {
+  padding: 0;
+}
+
+/* Stretch the image across the screen */
+.big_img {
+  width: 100%;
+  display: block;
+}
+
+/* Removes awkward spacing beneath navbar (only on this page) */
+.navbar {
+  margin-bottom: 0;
+}
