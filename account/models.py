@@ -2,8 +2,6 @@ from django.db import models
 from cuser.models import AbstractCUser
 
 class User(AbstractCUser):
-	first_name = models.TextField(null=True, blank=True)
-	last_name = models.TextField(null=True, blank=True)
 	birthdate = models.DateTimeField(null=True)
 	address = models.TextField(null=True, blank=True)
 	city = models.TextField(null=True, blank=True)
