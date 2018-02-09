@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'cuser',				#uses email field for unique user identifier
     'homepage',
     'account',
+    'formlib',
 ]
 
 MIDDLEWARE = [
