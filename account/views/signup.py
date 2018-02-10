@@ -44,13 +44,6 @@ class SignUpForm(Formless):
         if p1 != p2:
             raise forms.ValidationError('The passwords do not match.')
 
-        #create the new user
-        user = amod.User.objects.create_user(email=self.cleaned_data.get('email'), password=self.cleaned_data.get('password'))
-
-        #authenticate the user
-        self.user = authenticate(email=self.cleaned_data.get('email'), password=self.cleaned_data.get('password'))
-        if self.user is None:
-            raise forms.ValidationError('Invalid email or password.')
         return self.cleaned_data
 
     def clean_email(self):
@@ -59,6 +52,7 @@ class SignUpForm(Formless):
         if len(amod.User.objects.filter(email=email_c)) == 0:
             return email_c
         else:
+            print("ENTERED")
             raise forms.ValidationError('This email is already in use. Please use a different one.')
 
     def clean_password(self):
@@ -75,5 +69,11 @@ class SignUpForm(Formless):
 
     def commit(self):
         '''Process the form action'''
+        #create the new user
+        user = amod.User.objects.create_user(email=self.cleaned_data.get('email'), password=self.cleaned_data.get('password'))
+
+        #authenticate the user
+        self.user = authenticate(email=self.cleaned_data.get('email'), password=self.cleaned_data.get('password'))
+
         #log the user in
         login(self.request, self.user)
