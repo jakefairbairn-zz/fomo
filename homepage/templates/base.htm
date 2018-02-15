@@ -23,9 +23,9 @@
     <body>
         <div>
           <%block name="maintenance">
-            <div class="maintenance">
+            <!-- <div class="maintenance">
               This site is currently under maintenance.  Please check back with us soon!
-            </div>
+            </div> -->
           </%block>
         </div>
         <header>
@@ -53,7 +53,7 @@
                     ${ request.user.email }<span class="caret"></span></a>
                     <ul class="dropdown-menu">
                       <li>
-                        <a href="#">My Account</a>
+                        <a href="/account/myaccount">My Account</a>
                       </li>
                       <li>
                         <a href="/account/logout">Logout</a>

@@ -52,7 +52,6 @@ class SignUpForm(Formless):
         if len(amod.User.objects.filter(email=email_c)) == 0:
             return email_c
         else:
-            print("ENTERED")
             raise forms.ValidationError('This email is already in use. Please use a different one.')
 
     def clean_password(self):
