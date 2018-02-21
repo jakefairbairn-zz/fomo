@@ -31,7 +31,7 @@ class SignUpForm(Formless):
         self.fields['password2'] = forms.CharField(widget=forms.PasswordInput, label='Re-enter your password')
         self.fields['first_name'] = forms.CharField(label='First Name')
         self.fields['last_name'] = forms.CharField(label='Last Name')
-        self.fields['street_address'] = forms.CharField(label='Street Address')
+        self.fields['address'] = forms.CharField(label='Street Address')
         self.fields['city'] = forms.CharField(label='City')
         self.fields['zipcode'] = forms.CharField(label='ZipCode')
         self.fields['state'] = forms.CharField(label='State')

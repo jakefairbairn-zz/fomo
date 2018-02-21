@@ -5,7 +5,7 @@ class User(AbstractCUser):
 	first_name = models.TextField(null=True, blank=True)
 	last_name = models.TextField(null=True, blank=True)
 	birthdate = models.DateTimeField(null=True)
-	street_address = models.TextField(null=True, blank=True)
+	address = models.TextField(null=True, blank=True)
 	city = models.TextField(null=True, blank=True)
 	state = models.TextField(null=True, blank=True)
 	zipcode = models.TextField(null=True, blank=True)
