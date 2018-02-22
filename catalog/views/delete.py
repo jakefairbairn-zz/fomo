@@ -10,12 +10,15 @@ import re
 
 @view_function
 def process_request(request, product:amod.Product):
-    print(product)
+    #set the product status to Inactive
     product.status = 'I'
+    #save the status change
     product.save()
+
+    #get all active products
     products = amod.Product.objects.filter(status='A')
 
-    #render the template
+    #render the product list template
     return request.dmp_render('list.html', {
         'products': products,
     })

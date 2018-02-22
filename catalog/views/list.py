@@ -5,7 +5,6 @@ from django_mako_plus import view_function
 from formlib import Formless
 from django import forms
 from catalog import models as amod
-from pprint import pprint
 import re
 
 @view_function
