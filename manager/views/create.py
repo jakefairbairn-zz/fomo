@@ -11,27 +11,25 @@ from catalog import models as amod
 from pprint import pprint
 
 @view_function
-def process_request(request, prod:amod.Product):
+def process_request(request):
     #process the form
-    form = EditProductForm(request,
-                        initial=model_to_dict(prod))
+    form = CreateProductForm(request)
 
     if form.is_valid():
         print("VALID FORM")
         #comit the form
-        form.commit(prod)
-
+        form.commit()
         #redirect to the product list page
         return HttpResponseRedirect('/manager/product')
 
     #render the template
-    return request.dmp_render('edit.html', {
+    return request.dmp_render('create.html', {
         'form': form,
-        jscontext('type'): prod.__class__.__name__
     })
 
-class EditProductForm(Formless):
+class CreateProductForm(Formless):
     def init(self):
+        self.fields['type'] = forms.ChoiceField(label='Type', widget=forms.Select, choices=amod.Product.TYPE_CHOICES)
         self.fields['name'] = forms.CharField(label='Name')
         self.fields['status'] = forms.ChoiceField(label='Status', widget=forms.Select, choices=amod.Product.STATUS_CHOICES)
         self.fields['description'] = forms.CharField(label='Description', widget=forms.Textarea)
@@ -43,11 +41,11 @@ class EditProductForm(Formless):
         self.fields['reorder_quantity'] = forms.IntegerField(label="Reorder Quantity", required=False)
         self.fields['max_rental_days'] = forms.IntegerField(label="Max Rental Days", required=False)
         self.fields['retire_date'] = forms.DateField(label="Retire Date", required=False)
-        self.fields['type'] = forms.CharField(widget = forms.HiddenInput(), required = False)
 
     def clean(self):
         #clean individual product
         if self.cleaned_data['type'] == "IndividualProduct":
+            print("INDIVIDUAL")
             if self.cleaned_data['pid'] == '':
                 raise forms.ValidationError('A PID is required for the product.')
 
@@ -71,8 +69,27 @@ class EditProductForm(Formless):
         #return the cleaned data
         return self.cleaned_data
 
-    def commit(self, prod):
+    def commit(self):
         '''Process the form action'''
+
+        #create product and set fields for individual products
+        if self.cleaned_data['type'] == "IndividualProduct":
+            prod = amod.IndividualProduct()
+            prod.pid=self.cleaned_data['pid']
+
+        #create product and set fields for bulk products
+        elif self.cleaned_data['type'] == "BulkProduct":
+            prod = amod.BulkProduct()
+            prod.quantity=self.cleaned_data['quantity']
+            prod.reorder_trigger=self.cleaned_data['reorder_trigger']
+            prod.reorder_quantity=self.cleaned_data['reorder_quantity']
+
+        #create product and set fields for rental products
+        elif self.cleaned_data['type'] == "RentalProduct":
+            prod = amod.RentalProduct()
+            prod.pid=self.cleaned_data['pid']
+            prod.max_rental_days=self.cleaned_data['max_rental_days']
+            prod.retire_date=self.cleaned_data['retire_date']
 
         #set the common fields for all products
         prod.name=self.cleaned_data['name']
@@ -80,22 +97,6 @@ class EditProductForm(Formless):
         prod.description=self.cleaned_data['description']
         prod.price=self.cleaned_data['price']
         prod.category=self.cleaned_data['category']
-
-        #set fields for individual products
-        if self.cleaned_data['type'] == "IndividualProduct":
-            prod.pid=self.cleaned_data['pid']
-
-        #set fields for bulk products
-        elif self.cleaned_data['type'] == "BulkProduct":
-            prod.quantity=self.cleaned_data['quantity']
-            prod.reorder_trigger=self.cleaned_data['reorder_trigger']
-            prod.reorder_quantity=self.cleaned_data['reorder_quantity']
-
-        #set fields for rental products
-        elif self.cleaned_data['type'] == "RentalProduct":
-            prod.pid=self.cleaned_data['pid']
-            prod.max_rental_days=self.cleaned_data['max_rental_days']
-            prod.retire_date=self.cleaned_data['retire_date']
 
         #save the updated data for the objects
         prod.save()
