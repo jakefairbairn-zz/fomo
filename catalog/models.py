@@ -33,17 +33,19 @@ class Product(PolymorphicModel):
 
 class BulkProduct(Product):
     '''A bulk product'''
+    TITLE = 'Bulk'
     quantity = models.IntegerField()
     reorder_trigger = models.IntegerField()
     reorder_quantity = models.IntegerField()
 
 class IndividualProduct(Product):
-    TITLE = 'Individual'
     '''A product tracked individually'''
+    TITLE = 'Individual'
     pid = models.TextField()
 
 class RentalProduct(Product):
     '''Rental product (tracked individually)'''
+    TITLE = 'Rental'
     pid = models.TextField()
     max_rental_days = models.IntegerField(default=0)
     retire_date = models.DateField(null=True, blank=True)

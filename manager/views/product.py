@@ -10,12 +10,8 @@ import re
 @view_function
 def process_request(request):
     products = amod.Product.objects.filter(status='A')
-    for product in products:
-            print(product.__class__.__name__)
-            if product.__class__.__name__ == "BulkProduct":
-                print(product.quantity)
 
     #render the template
-    return request.dmp_render('list.html', {
+    return request.dmp_render('product.html', {
         'products': products,
     })

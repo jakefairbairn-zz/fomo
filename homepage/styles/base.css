@@ -21,11 +21,17 @@ main {
     padding: 15px;
 } */
 
+body {
+  margin-bottom: 10px;
+}
+
 .navbar-collapse.in {
   overflow: hidden;
 }
 
 .footer {
+  margin-top: 10px;
+  height: 10px;
   padding: 10px;
 }
 

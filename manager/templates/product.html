@@ -18,18 +18,10 @@
         <td>${ product.quantity if product.__class__.__name__ == "BulkProduct" else 1 }</td>
         <td>${ product.category }</td>
         <td>${ product.price }</td>
-        <td><a href="/catalog/edit/${ product.id }">Edit</a>/<a href="/catalog/delete/${ product.id }">Delete</a></td>
+        <td><a href="/manager/edit/${ product.id }">Edit</a>/<a href="/manager/delete/${ product.id }">Delete</a></td>
       </tr>
     % endfor
   </tbody>
 </table>
 <button type="button" class="btn btn-primary">Create New Product</button>
 </%block>
-
-create_date = models.DateTimeField(auto_now_add=True)
-  last_modified = models.DateTimeField(auto_now=True)
-  status = models.TextField(choices=STATUS_CHOICES, default='A')
-  name = models.TextField()
-  description = models.TextField()
-  category = models.ForeignKey('Category', on_delete=models.CASCADE)
-  price
