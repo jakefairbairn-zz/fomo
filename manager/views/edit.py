@@ -25,7 +25,7 @@ def process_request(request, prod:amod.Product):
         return HttpResponseRedirect('/manager/product')
 
     #render the template
-    return request.dmp_render('edit.html', {
+    return request.dmp.render('edit.html', {
         'form': form,
         jscontext('type'): prod.__class__.__name__
     })

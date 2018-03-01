@@ -23,7 +23,7 @@ def process_request(request):
     }
     print(form)
     print(context)
-    return request.dmp_render('testform.html', context)
+    return request.dmp.render('testform.html', context)
 
 
 class TestForm(forms.Form):

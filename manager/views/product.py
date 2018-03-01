@@ -12,6 +12,6 @@ def process_request(request):
     products = amod.Product.objects.filter(status='A')
 
     #render the template
-    return request.dmp_render('product.html', {
+    return request.dmp.render('product.html', {
         'products': products,
     })

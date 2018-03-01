@@ -18,7 +18,6 @@ $(function(context) {
 });
 
 function changeForm() {
-  console.log("CALLED");
   if($('#id_type').val() == 'IndividualProduct') {
     $(".bulk").hide(1000);
     $(".rental").hide(1000);

@@ -2,6 +2,6 @@
 
 <%block name="nav_items">
     <ul class="nav navbar-nav">
-      <li class="nav_item ${ 'active' if request.dmp_router_page == 'product' else '' }"><a href="/manager/product">Products</a></li>
+      <li class="nav_item ${ 'active' if request.dmp.page == 'product' else '' }"><a href="/manager/product">Products</a></li>
     </ul>
 </%block>
