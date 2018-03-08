@@ -28,8 +28,19 @@ class Product(PolymorphicModel):
     status = models.TextField(choices=STATUS_CHOICES, default='A')
     name = models.TextField()
     description = models.TextField()
-    category = models.ForeignKey('Category', on_delete=models.CASCADE)
-    price = models.DecimalField(max_digits=7, decimal_places=2)
+    category = models.ForeignKey('Category', on_delete=models.CASCADE, null=True)
+    price = models.DecimalField(max_digits=7, decimal_places=2, null=True)
+
+    # def image_url(self):
+    #     '''Always returns an image'''
+    #     url = settings.STATIC_URL + '/catalog/media/products/' + self.filename
+    #
+    # def image_urls(self):
+    #     '''
+    #     Returns a list of iamges
+    #     If no image, return [ unavailable ]
+    #     WILL NOT return an empty list
+    #     '''
 
 class BulkProduct(Product):
     '''A bulk product'''
@@ -49,3 +60,8 @@ class RentalProduct(Product):
     pid = models.TextField()
     max_rental_days = models.IntegerField(default=0)
     retire_date = models.DateField(null=True, blank=True)
+
+class ProductImage(Product):
+    '''Images for a product'''
+    filename = models.TextField()
+    product = models.ForeignKey(Product, related_name="images", on_delete=models.CASCADE)
