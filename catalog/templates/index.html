@@ -2,7 +2,7 @@
 
 <%block name="left_content">
   <ul class="nav" id="category_list">
-    <li class="category_nav_item ${ 'active' if str(request.dmp.urlparams[0]) == '' else '' }">
+    <li class="category_nav_item ${ 'active' if str(request.dmp.urlparams[0]) == '0' else '' }">
       <a href="/catalog/index/0">All Products</a>
     </li>
     % for category in categories:
@@ -17,12 +17,16 @@
     <div class="content">
         <h1 class="text-center">${ active_category }</h1>
         <div class="pull-right">
-          <a id="next_page"><i class="glyphicon glyphicon-backward"></i></a>
-           Page <span id="page_number">1</span> of _
-          <a id="next_page"><i class="glyphicon glyphicon-forward"></i></a>
+          <button type="button" class="btn btn-sm" id="prev_page">
+            <span class="glyphicon glyphicon-backward"></span>
+          </button>
+           Page <span id="page_number">1</span> of <span id="num_pages">_</span>
+           <button type="button" class="btn btn-sm" id="next_page">
+             <span class="glyphicon glyphicon-forward"></span>
+           </button>
         </div>
-    </div>
+    </div><br /><br /><br />
     <div id="catalog_container">
-      <div id="catalog"></div>
+      <ul id="catalog"></ul>
     </div>
 </%block>

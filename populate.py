@@ -53,7 +53,6 @@ for catname in ( 'Instruments', 'Sheet Music', 'Electronics', 'Software', 'Lesso
     c.description = 'This is a category named {}'.format(catname)
     c.save()
     categories.append(c)
-print('Done')
 
 # products
 print('Creating products...')
@@ -88,7 +87,7 @@ for i in range(1, 25):
     p.pid = ''.join([ random.choice('ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789012345678901234567890123456789') for j in range(6) ])
     p.save()
 
-print('Done')
+
 ##################################
 ###   Product Images
 
@@ -115,11 +114,8 @@ for product in cmod.Product.objects.all():
             product.name = ' '.join(( s.capitalize() for s in name.split('_') ))
             product.description = '<p>This item is an individual product named %s.<p><p>%s</p>' % (product.name, LOREM_IPSUM)
             product.save()
-print('Done')
 
-print('Deleting image from first product...')
 # remove the images from the first product
 product = cmod.Product.objects.all().first()
 for pi in product.images.all():
     pi.delete()
-print('Done')

@@ -1,5 +1,6 @@
 from django.db import models
 from polymorphic.models import PolymorphicModel
+from django.conf import settings
 
 class Category(models.Model):
         '''Category for products'''
@@ -28,19 +29,25 @@ class Product(PolymorphicModel):
     status = models.TextField(choices=STATUS_CHOICES, default='A')
     name = models.TextField()
     description = models.TextField()
-    category = models.ForeignKey('Category', on_delete=models.CASCADE, null=True)
-    price = models.DecimalField(max_digits=7, decimal_places=2, null=True)
+    category = models.ForeignKey('Category', on_delete=models.CASCADE)
+    price = models.DecimalField(max_digits=7, decimal_places=2)
 
-    # def image_url(self):
-    #     '''Always returns an image'''
-    #     url = settings.STATIC_URL + '/catalog/media/products/' + self.filename
-    #
-    # def image_urls(self):
-    #     '''
-    #     Returns a list of iamges
-    #     If no image, return [ unavailable ]
-    #     WILL NOT return an empty list
-    #     '''
+    def image_url(self):
+        '''Always returns an image'''
+        for image in self.images.all():
+            print(image.filename)
+        print("DONE IMAGES")
+        if not self.images.all():
+            url = settings.STATIC_URL + 'catalog/media/products/image_unavailable.gif'
+        else:
+            url = settings.STATIC_URL + 'catalog/media/products/' + self.images.all()[0].filename
+        return url
+
+    def image_urls(self):
+        if not self.images.all():
+            return self.images.all()
+        else:
+            return ['image_unavailable.gif']
 
 class BulkProduct(Product):
     '''A bulk product'''
