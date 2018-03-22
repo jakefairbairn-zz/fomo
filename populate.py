@@ -105,6 +105,7 @@ images = cycle(filenames)
 # add 0-4 images to each product
 for product in cmod.Product.objects.all():
     for i in range(random.randint(1, 5)):
+        print(i)
         pi = cmod.ProductImage()
         pi.filename = next(images)
         pi.product = product

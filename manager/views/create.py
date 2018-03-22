@@ -16,7 +16,6 @@ def process_request(request):
     form = CreateProductForm(request)
 
     if form.is_valid():
-        print("VALID FORM")
         #comit the form
         form.commit()
         #redirect to the product list page
@@ -45,7 +44,6 @@ class CreateProductForm(Formless):
     def clean(self):
         #clean individual product
         if self.cleaned_data['type'] == "IndividualProduct":
-            print("INDIVIDUAL")
             if self.cleaned_data['pid'] == '':
                 raise forms.ValidationError('A PID is required for the product.')
 

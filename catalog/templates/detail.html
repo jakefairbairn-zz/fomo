@@ -1,0 +1,25 @@
+<%inherit file="app_base.htm" />
+
+<%block name="content">
+  <h2 id="product_name">${ product.name | h }</h2>
+  <div class="col-md-2">
+    <ul id="thumbnail_list">
+      %for image in product_images:
+        <li>
+          <img class="thumbnail_image" src="${ STATIC_URL }catalog/media/products/${ image.filename }" />
+        </li>
+      %endfor
+    </ul>
+  </div>
+  <div class="col-md-4">
+    <img id="product_image" class="img-responsive" src="${ STATIC_URL }catalog/media/products/${ product_images[0].filename }" />
+  </div>
+  <div class="col-md-6">
+    <p>Price: $${ product.price }</p>
+    <p>${ product.description }</p>
+    %if product.__class__.__name__ == "BulkProduct":
+      <input type='number' id='bulk_quantity' class='form-control' value='1' min='1' max='${product.quantity}' /><br />
+    %endif
+    <button type="button" class="btn btn-primary">Buy Now</button>
+  </div>
+</%block>

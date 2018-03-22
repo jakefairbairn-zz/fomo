@@ -17,7 +17,6 @@ def process_request(request, prod:amod.Product):
                         initial=model_to_dict(prod))
 
     if form.is_valid():
-        print("VALID FORM")
         #comit the form
         form.commit(prod)
 

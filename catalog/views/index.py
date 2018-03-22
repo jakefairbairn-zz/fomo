@@ -10,9 +10,6 @@ import math
 @view_function
 def process_request(request, category_id = 0):
 
-    #get the categories for the sidebar
-    categories = cmod.Category.objects.all()
-
     #get products based on the category select (if any)
     if str(category_id) == '0' or category_id == None:
         active_category = "Products"
@@ -23,7 +20,6 @@ def process_request(request, category_id = 0):
 
     #load the template
     return request.dmp.render('index.html', {
-        'categories': categories,
         'active_category': active_category,
         jscontext('category_id'): category_id,
         jscontext('num_pages'): num_pages

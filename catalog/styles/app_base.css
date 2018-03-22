@@ -1,0 +1,29 @@
+.category_nav_item {
+  list-style-type: none;
+  font-size: 20px;
+  font-weight: bold;
+  padding-bottom: 10px;
+}
+
+.category_nav_item > a {
+  vertical-align: bottom;
+}
+
+.active {
+  background-color: #CCCCCC;
+}
+
+#last_five_list {
+  list-style-type: none;
+}
+
+.last_five_image {
+  height: 75px;
+  width: 75px;
+  margin: 5px;
+}
+
+#last_five_title {
+  font-size: 18px;
+  text-align: center;
+}

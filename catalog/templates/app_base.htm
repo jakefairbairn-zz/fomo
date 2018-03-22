@@ -1,4 +1,5 @@
 <%inherit file="/homepage/templates/base.htm" />
+<%! from catalog import models as cmod %>
 
 <%block name="nav_bar">
   <nav class="navbar navbar-default">
@@ -20,4 +21,27 @@
       </div>
     </div>
   </nav>
+</%block>
+
+<%block name="left_content">
+  <ul id="category_list">
+    <li class="category_nav_item ${ 'active' if active_category == 'Products' else ''}"><a href="/catalog/index/" class="align-middle">All Products</a></li>
+    %for cat in cmod.Category.objects.order_by('name'):
+      <li class="category_nav_item ${ 'active' if active_category == cat else ''}"><a href="/catalog/index/${ cat.id }">${cat.name}</a></li>
+    %endfor
+  </ul>
+</%block>
+
+<%block name="right_content">
+  <h2 id="last_five_title">Recently Viewed:</h2>
+  <ol id="last_five_list">
+    %for product in request.last_five[1:6]:
+      <li>
+        <a href="/catalog/detail/${ product.id }/">
+          <div class="text-center"><img class="last_five_image" src="${ product.image_url() }" /></div>
+          <div class="last_five_name text-center">${ product.name }</div>
+        </a>
+      </li>
+    %endfor
+  </ol>
 </%block>

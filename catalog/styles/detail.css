@@ -1,0 +1,21 @@
+#thumbnail_list {
+  list-style: none;
+}
+
+.thumbnail_image {
+  height: 75px;
+  width: 75px;
+  margin: 5px;
+}
+
+.thumbnail_image, #product_image {
+  border: 2px solid #d2d2d2;
+}
+
+#product_name {
+  text-align: center;
+}
+
+#bulk_quantity{
+    width: 60px;
+}

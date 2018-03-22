@@ -1,10 +1,14 @@
 $(function(context) {
     return function() {
       $('#num_pages').text(context.num_pages)
-      $('#catalog').load('/catalog/index.inner/' + context.category_id + '/' + $('#page_number').text(),
-        function() {
-          $('#num_pages').text = context.num_pages
+      $('#catalog').hide(function() {
+        $('#catalog').load('/catalog/index.inner/' + context.category_id + '/' + $('#page_number').text(),
+          function() {
+            $('#num_pages').text = context.num_pages
+        })
+        $('#catalog').fadeIn()
       })
+
 
       $( "#next_page" ).click(function() {
         var current_page = parseInt($('#page_number').text())
@@ -16,8 +20,13 @@ $(function(context) {
         else
         {
           $('#page_number').text(next_page)
-          $('#catalog').load('/catalog/index.inner/' + context.category_id + '/' + next_page)
+          $('#catalog').fadeOut('slow', function()
+          {
+            $('#catalog').load('/catalog/index.inner/' + context.category_id + '/' + next_page)
+          })
+          $('#catalog').delay(500).fadeIn('slow')
         }
+
       });
 
       $( "#prev_page" ).click(function() {
@@ -30,7 +39,11 @@ $(function(context) {
         else
         {
           $('#page_number').text(prev_page)
-          $('#catalog').load('/catalog/index.inner/' + context.category_id + '/' + prev_page)
+          $('#catalog').fadeOut('slow', function()
+          {
+            $('#catalog').load('/catalog/index.inner/' + context.category_id + '/' + prev_page)
+          })
+          $('#catalog').delay(500).fadeIn('slow')
         }
       });
     }
