@@ -10,27 +10,14 @@ class LastFiveMiddleware:
 
         #get all of the product ids that have been viewed in the session (set to None if empty)
         session_product_ids = list(dict.fromkeys(request.session.get('session_product_ids', [])))
-        print("START IDS")
-        print(session_product_ids)
-
-        #determine the number of objects to add to the last_five_list
-        if not session_product_ids:
-            list_size = 0
-        elif len(session_product_ids) > 6:
-            list_size = 6
-        else:
-            list_size = len(session_product_ids)
 
         #convert the product ids to product objects
         last_five_list = []
-        for i in range(list_size):
-            last_five_list.append(cmod.Product.objects.get(id = session_product_ids[i]))
+        for product_id in session_product_ids:
+            last_five_list.append(cmod.Product.objects.get(id = product_id))
 
         #store the product objects in the last_five session variable
         request.last_five = last_five_list
-        print("PRODUCTS BEFORE RESPONSE")
-        for product in request.last_five:
-            pprint(product.id)
 
         #load the view
         response = self.get_response(request)
@@ -39,7 +26,7 @@ class LastFiveMiddleware:
         session_product_ids = []
 
         #recreate the session_product_ids list with the new objects
-        for product in request.last_five:
+        for product in request.last_five[:6]:
             session_product_ids.append(product.id)
 
         #set the session session_product_ids list

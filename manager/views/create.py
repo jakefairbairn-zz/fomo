@@ -8,7 +8,6 @@ from catalog import models as amod
 import re
 from django.forms.models import model_to_dict
 from catalog import models as amod
-from pprint import pprint
 
 @view_function
 def process_request(request):

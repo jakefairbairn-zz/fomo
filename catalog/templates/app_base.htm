@@ -35,13 +35,24 @@
 <%block name="right_content">
   <h2 id="last_five_title">Recently Viewed:</h2>
   <ol id="last_five_list">
-    %for product in request.last_five[1:6]:
-      <li>
-        <a href="/catalog/detail/${ product.id }/">
-          <div class="text-center"><img class="last_five_image" src="${ product.image_url() }" /></div>
-          <div class="last_five_name text-center">${ product.name }</div>
-        </a>
-      </li>
-    %endfor
+    %if request.dmp.page == 'detail':
+      %for product in request.last_five[1:6]:
+        <li>
+          <a href="/catalog/detail/${ product.id }/">
+            <div class="text-center"><img class="last_five_image" src="${ product.image_url() }" /></div>
+            <div class="last_five_name text-center">${ product.name }</div>
+          </a>
+        </li>
+      %endfor
+    %else:
+      %for product in request.last_five[0:5]:
+        <li>
+          <a href="/catalog/detail/${ product.id }/">
+            <div class="text-center"><img class="last_five_image" src="${ product.image_url() }" /></div>
+            <div class="last_five_name text-center">${ product.name }</div>
+          </a>
+        </li>
+      %endfor
+    %endif
   </ol>
 </%block>
