@@ -10,5 +10,5 @@ class User(AbstractCUser):
 	state = models.TextField(null=True, blank=True)
 	zipcode = models.TextField(null=True, blank=True)
 
-	def get_purchases(self):
-		return [ 'Roku Ultimate 4', 'Skis', 'Computer' ]
+	def get_shopping_cart(self):
+		shopping_cart = 
