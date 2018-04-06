@@ -5,40 +5,43 @@ from django.forms.models import model_to_dict
 from decimal import Decimal
 from datetime import datetime
 import stripe
+from localflavor.us.us_states import STATE_CHOICES
 
 #######################################################################
-###   Category
+# Category
 
 class Category(models.Model):
-        '''Category for products'''
-        create_date = models.DateTimeField(auto_now_add=True)
-        last_modified = models.DateTimeField(auto_now=True)
-        name = models.TextField()
-        description = models.TextField()
+    '''Category for products'''
+    create_date = models.DateTimeField(auto_now_add=True)
+    last_modified = models.DateTimeField(auto_now=True)
+    name = models.TextField()
+    description = models.TextField()
 
-        def __str__(self):
-            return self.name
+    def __str__(self):
+        return self.name
+
 
 #######################################################################
-###   Products
+# Products
 
 class Product(PolymorphicModel):
     '''A bulk, individual, or rental product'''
     TYPE_CHOICES = (
-        ( 'BulkProduct', 'Bulk Product' ),
-        ( 'IndividualProduct', 'Individual Product' ),
-        ( 'RentalProduct', 'Rental Product' )
+        ('BulkProduct', 'Bulk Product'),
+        ('IndividualProduct', 'Individual Product'),
+        ('RentalProduct', 'Rental Product')
     )
     STATUS_CHOICES = (
-        ( 'A', 'Active' ),
-        ( 'I', 'Inactive' )
+        ('A', 'Active'),
+        ('I', 'Inactive')
     )
     create_date = models.DateTimeField(auto_now_add=True)
     last_modified = models.DateTimeField(auto_now=True)
     status = models.TextField(choices=STATUS_CHOICES, default='A')
     name = models.TextField()
     description = models.TextField()
-    category = models.ForeignKey('Category', on_delete=models.CASCADE, null=True)
+    category = models.ForeignKey(
+        'Category', on_delete=models.CASCADE, null=True)
     price = models.DecimalField(max_digits=7, decimal_places=2, null=True)
 
     def image_url(self):
@@ -46,7 +49,8 @@ class Product(PolymorphicModel):
         if not self.images.all():
             url = settings.STATIC_URL + 'catalog/media/products/image_unavailable.gif'
         else:
-            url = settings.STATIC_URL + 'catalog/media/products/' + self.images.all()[0].filename
+            url = settings.STATIC_URL + 'catalog/media/products/' + \
+                self.images.all()[0].filename
         return url
 
     def image_urls(self):
@@ -55,6 +59,7 @@ class Product(PolymorphicModel):
         else:
             return self.images.all()
 
+
 class BulkProduct(Product):
     '''A bulk product'''
     TITLE = 'Bulk'
@@ -62,10 +67,12 @@ class BulkProduct(Product):
     reorder_trigger = models.IntegerField()
     reorder_quantity = models.IntegerField()
 
+
 class IndividualProduct(Product):
     '''A product tracked individually'''
     TITLE = 'Individual'
     pid = models.TextField()
+
 
 class RentalProduct(Product):
     '''Rental product (tracked individually)'''
@@ -74,10 +81,12 @@ class RentalProduct(Product):
     max_rental_days = models.IntegerField(default=0)
     retire_date = models.DateField(null=True, blank=True)
 
+
 class ProductImage(models.Model):
     '''Images for a product'''
     filename = models.TextField()
-    product = models.ForeignKey(Product, related_name="images", on_delete=models.CASCADE)
+    product = models.ForeignKey(
+        Product, related_name="images", on_delete=models.CASCADE)
 
 
 from django.db import models, transaction
@@ -89,7 +98,7 @@ from datetime import datetime
 import stripe
 
 #######################################################################
-###   Orders
+# Orders
 
 class Order(models.Model):
     '''An order in the system'''
@@ -112,7 +121,8 @@ class Order(models.Model):
     ship_name = models.TextField(null=True, blank=True)
     ship_address = models.TextField(null=True, blank=True)
     ship_city = models.TextField(null=True, blank=True)
-    ship_state = models.TextField(null=True, blank=True)
+    ship_state = models.CharField(
+        max_length=2, choices=STATE_CHOICES, null=True, blank=True)
     ship_zip_code = models.TextField(null=True, blank=True)
 
     def __str__(self):
@@ -127,6 +137,15 @@ class Order(models.Model):
         # query to exclude that OrderItem
         # I simply used the product name (not a great choice,
         # but it is acceptable for credit)
+
+        # MY CODE
+        if include_tax_item:
+            active_items = OrderItem.objects.filter(status='active')
+        else:
+            active_items = OrderItem.objects.filter(status='active').exclude(product__name='tax_item')
+        
+        return active_items
+        # END
 
     def get_item(self, product, create=False):
         '''Returns the OrderItem object for the given product'''
@@ -161,7 +180,7 @@ class Order(models.Model):
 
     def finalize(self, stripe_charge_token):
         '''Runs the payment and finalizes the sale'''
-        with transaction.atomic():
+        # with transaction.atomic():
             # recalculate just to be sure everything is updated
 
             # check that all products are available
@@ -175,8 +194,9 @@ class Order(models.Model):
             # update product quantities for BulkProducts
             # update status for IndividualProducts
 
+
 #######################################################################
-###   OrderItems
+# OrderItems
 
 class OrderItem(PolymorphicModel):
     '''A line item on an order'''

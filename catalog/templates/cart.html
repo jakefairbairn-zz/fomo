@@ -1,0 +1,30 @@
+< % inherit file = "app_base.htm" / >
+
+Shows all items in cart, including name, price, quantity, extended. Also includes sales tax and order total price.
+
+
+< % block name = "content" >
+
+    <table id="cart_table">
+        <tr>
+            <th>Product Name</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th>Extended</th>
+        </tr>
+        %for product in shopping_cart:
+            <tr>
+                <td>${ product.name }</td>
+                <td>${ product.price }</td>
+                <td>${ product.quantity }</td>
+                <td>${ product.extended }</td>
+            </tr>
+        %endfor
+        <tr>
+            <td id="price" colspan="3">Total Price</td>
+        </tr>
+    </table>
+
+     <a type = "button" class = "btn btn-lg centered nav_link" href = "/catalog/checkout" > Chekcout Now < /a >
+
+</%block >

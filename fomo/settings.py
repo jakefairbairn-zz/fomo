@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 
 import os
 import shutil
+import stripe
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -192,6 +193,9 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+STRIPE_PUBLIC_KEY = 'pk_test_6MKeFWUsXkZomrOLiD1ouWtR'
+STRIPE_SECRET_KEY = 'sk_test_7Ny71ok5pQTP5JnpQYNd2uTx'
+stripe.api_key = STRIPE_SECRET_KEY
 
 # Internationalization
 # https://docs.djangoproject.com/en/2.0/topics/i18n/
